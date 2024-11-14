@@ -243,7 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4502850c46e01924ba5fed2d2893c3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileObjPrefab: {fileID: 2496362007867492321, guid: 7b9ca5b6483644448a0c1966fa39bf4b, type: 3}
+  grassPrefab: {fileID: 8654605657985777163, guid: 46eccd67c255b994e87ffd85d64c895c, type: 3}
+  forestPrefab: {fileID: 8654605657985777163, guid: 6c514da88c7c29841804bff2419e4841, type: 3}
+  waterPrefab: {fileID: 8654605657985777163, guid: 7b3b90a805045024e9968896d20bf91a, type: 3}
   tileParent: {fileID: 763883669}
 --- !u!4 &750476935
 Transform:
