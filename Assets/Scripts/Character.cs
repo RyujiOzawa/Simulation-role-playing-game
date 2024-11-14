@@ -11,3 +11,7 @@ public class Character : MonoBehaviour
         transform.position = (Vector2)positionInt;   
     }
 }
+
+// 選択タイルの取得
+// キャラの選択
+// キャラの移動
