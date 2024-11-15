@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour
     // フェーズの管理
     enum Phase
     {
-        PlayerCharacterSelection,  //  キャラ選択
-        PlayerCharacterMoveSelection,  //  キャラ移動
+        PlayerCharacterSelection,           //  キャラ選択
+        PlayerCharacterMoveSelection,       //  キャラ移動
+        PlayerCharacterCommandSelection,    //  コマンド対象
+        PlayerCharacterTargetSelection,     //  攻撃対象選択
         EnemyCharacterSelection,
         EnemyCharacterMoveSelection,
     }
@@ -22,10 +24,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Phase phase;
     [SerializeField] CharactersManager charactersManager;
     [SerializeField] MapManager mapManager;
+    [SerializeField] ActionCommnadUI actionCommnadUI;
 
     private void Start()
     {
         phase = Phase.PlayerCharacterSelection;
+        actionCommnadUI.Show(false);
     }
 
     //PlayerCharacterSelection, // キャラ選択
@@ -100,10 +104,30 @@ public class GameManager : MonoBehaviour
             {
                 // selectedCharacterをtileObj迄移動させる
                 selectedCharacter.Move(clickTileObj.positionInt);
+                phase = Phase.PlayerCharacterCommandSelection;
+                // コマンドの表示
+                actionCommnadUI.Show(true);
             }
             mapManager.ResetMovablepanels(movableTiles);
             selectedCharacter = null;
         }
+    }
 
+    public void OnAttackButton()
+    {
+        Debug.Log("攻撃選択");
+    }
+
+    public void OnWaiteButton()
+    {
+        Debug.Log("待機選択");
+        OnPlayerTurnEnd();
+    }
+
+    void OnPlayerTurnEnd()
+    {
+        Debug.Log("相手ターン");
+        phase = Phase.EnemyCharacterSelection;
+        actionCommnadUI.Show(false);
     }
 }
