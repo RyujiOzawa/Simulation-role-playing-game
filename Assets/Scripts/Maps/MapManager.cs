@@ -5,19 +5,17 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     [SerializeField] Cursor cursor;
-    [SerializeField] CharactersManager charactersManager;
     [SerializeField] MapGenerator mapGenerator;
 
+    // 生成したマップを管理する
     List<TileObj> tileObjs = new List<TileObj>();
 
-    List<TileObj> movableTiles = new List<TileObj>();
     private void Start()
     {
        tileObjs = mapGenerator.Generate();
     }
 
-    // TODO クリックしたタイル取得する
-
+    // クリックしたタイル取得する
     public TileObj GetClickTileObj()
     {
         Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -25,62 +23,14 @@ public class MapManager : MonoBehaviour
         // Rayを飛ばしてヒットしたタイルを取得する
         if (hit2D && hit2D.collider)
         {
-            cursor.SetPosition(hit2D.transform);
+           cursor.SetPosition(hit2D.transform);
            return hit2D.collider.GetComponent<TileObj>();
         }
         return null;
     }
 
-    // クリックしたオブジェクトを取得したい
-    // クリック判定　=> Update関数の中でInputを使う
-    // クリックしたオブジェクトを取得したい　=> クリックした場所にRayを飛ばしてオブジェクトを取得する
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit2D = Physics2D.Raycast(
-                clickPosition,
-                Vector2.down
-                );
-            // Rayを飛ばしてヒットしたタイルを取得する
-            if (hit2D && hit2D.collider)
-            {
-                cursor.SetPosition(hit2D.transform);
-                TileObj tileObj = hit2D.collider.GetComponent<TileObj>();
-                // ヒットしたタイル上のキャラを取得する
-                Character character = charactersManager.GetCharacter(tileObj.positionInt);
-                if (character)
-                {
-                    Debug.Log("居る");
-                    // 選択キャラの保持
-                    selectedCharacter = character;
-                    ResetMovablepanels();
-                    // 移動範囲を表示
-                    ShowMovablePanels(selectedCharacter);
-                }
-                else
-                {
-                    Debug.Log("クリックした場所にキャラが居ない");
-                    // キャラを保持しているなら、クリックしたタイルの場所に移動させる
-                    if (selectedCharacter)
-                    {
-                        // クリックしたタイルtileObjが移動範囲に含まれるなら
-                        if (movableTiles.Contains(tileObj))
-                        {
-                            // selectedCharacterをtileObj迄移動させる
-                            selectedCharacter.Move(tileObj.positionInt);
-                        }
-                        ResetMovablepanels();
-                        selectedCharacter = null;
-                    }
-                }
-            }
-        }
-    }
-
-    // TODO 移動範囲を表示する
-    public void ShowMovablePanels(Character character)
+    // 移動範囲を表示する
+    public void ShowMovablePanels(Character character, List<TileObj> movableTiles)
     {
         // characterから上下左右のタイルを探す
 
@@ -96,7 +46,8 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void ResetMovablepanels()
+    // 移動範囲表示をリセットする
+    public void ResetMovablepanels(List<TileObj> movableTiles)
     {
         foreach (var tile in movableTiles)
         {

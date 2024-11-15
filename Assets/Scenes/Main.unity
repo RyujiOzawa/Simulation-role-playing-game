@@ -691,6 +691,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   phase: 0
+  charactersManager: {fileID: 1214843938}
+  mapManager: {fileID: 1643184661}
 --- !u!4 &1245674894
 Transform:
   m_ObjectHideFlags: 0
@@ -741,7 +743,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 678753261}
-  charactersManager: {fileID: 1214843938}
   mapGenerator: {fileID: 750476934}
 --- !u!4 &1643184662
 Transform:

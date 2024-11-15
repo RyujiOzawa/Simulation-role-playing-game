@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // フェーズの管理
-        enum Phase
+    enum Phase
     {
         PlayerCharacterSelection,  //  キャラ選択
         PlayerCharacterMoveSelection,  //  キャラ移動
@@ -13,7 +13,11 @@ public class GameManager : MonoBehaviour
         EnemyCharacterMoveSelection,
     }
 
+    // 選択したキャラの保持
     Character selectedCharacter;
+    // 選択キャラの移動可能範囲の保持
+    List<TileObj> movableTiles = new List<TileObj>();
+
 
     [SerializeField] Phase phase;
     [SerializeField] CharactersManager charactersManager;
@@ -25,14 +29,14 @@ public class GameManager : MonoBehaviour
     }
 
     //PlayerCharacterSelection, // キャラ選択
-    // Playerがクリックしたら処理したい
-    // Playerがクリックしたら処理したい
+    // PlayerCharacterMoveSelection, // キャラ移動
+
     private void Update()
     {
         // Playerがクリックしたら処理したい
         if (Input.GetMouseButtonDown(0))
         {
-
+            PlayerClickAction();
         }
     }
 
@@ -49,22 +53,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // PlayerCharacterSelectionフェーズでクリックした時にやりたいこと
-    void PlayerCharacterSelection()
+    bool IsClickCharacter(TileObj clickTileObj)
     {
-        // クリックしたタイルを取得して
-        // 其の上にキャラが居るなら
-        TileObj clickTileObj = mapManager.GetClickTileObj();
-
-        // キャラを取得して、移動範囲を表示
         Character character = charactersManager.GetCharacter(clickTileObj.positionInt);
         if (character)
         {
             // 選択キャラの保持
             selectedCharacter = character;
-            mapManager.ResetMovablepanels();
+            mapManager.ResetMovablepanels(movableTiles);
             // 移動範囲を表示
-            mapManager.ShowMovablePanels(selectedCharacter);
+            mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+            return true;
+        }
+        return false;
+    }
+
+    // PlayerCharacterSelectionフェーズでクリックした時にやりたいこと
+    void PlayerCharacterSelection()
+    {
+        // クリックしたタイルを取得して
+        TileObj clickTileObj = mapManager.GetClickTileObj();
+
+        // 其の上にキャラが居るなら
+        if (IsClickCharacter(clickTileObj))
+        {
             phase = Phase.PlayerCharacterMoveSelection;
         }
     }
@@ -73,7 +85,25 @@ public class GameManager : MonoBehaviour
     void PlayerCharacterMoveSelection()
     {
         // クリックした場所が移動範囲なら移動させて、敵のフェーズへ
-        phase = Phase.EnemyCharacterSelection;
-    }
+        TileObj clickTileObj = mapManager.GetClickTileObj();
 
+        // キャラクターが居るなら
+        if (IsClickCharacter(clickTileObj))
+        {
+            return;
+        }
+
+        if (selectedCharacter)
+        {
+            // クリックしたタイルtileObjが移動範囲に含まれるなら
+            if (movableTiles.Contains(clickTileObj))
+            {
+                // selectedCharacterをtileObj迄移動させる
+                selectedCharacter.Move(clickTileObj.positionInt);
+            }
+            mapManager.ResetMovablepanels(movableTiles);
+            selectedCharacter = null;
+        }
+
+    }
 }
