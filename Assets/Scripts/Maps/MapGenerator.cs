@@ -21,12 +21,8 @@ public class MapGenerator : MonoBehaviour
     const int WATER_RATE = 10;
     const int FOREST_RATE = 30;
     
-    private void Start()
-    {
-        Generate();
-    }
-
-    void Generate()
+    // Map生成
+    public void Generate()
     {
         Vector2 offset = new Vector2(-WiDTH / 2, -HEIGHT / 2);
         for (int x = 0; x < WiDTH; x++)

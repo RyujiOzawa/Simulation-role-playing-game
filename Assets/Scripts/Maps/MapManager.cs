@@ -6,6 +6,12 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] Cursor cursor;
     [SerializeField] CharactersManager charactersManager;
+    [SerializeField] MapGenerator mapGenerator;
+
+    private void Start()
+    {
+        mapGenerator.Generate();
+    }
 
     // クリックしたオブジェクトを取得したい
     // クリック判定　=> Update関数の中でInputを使う
