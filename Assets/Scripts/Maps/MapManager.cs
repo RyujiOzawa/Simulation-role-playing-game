@@ -8,13 +8,27 @@ public class MapManager : MonoBehaviour
     [SerializeField] CharactersManager charactersManager;
     [SerializeField] MapGenerator mapGenerator;
 
-    Character selectedCharacter;
     List<TileObj> tileObjs = new List<TileObj>();
 
     List<TileObj> movableTiles = new List<TileObj>();
     private void Start()
     {
        tileObjs = mapGenerator.Generate();
+    }
+
+    // TODO クリックしたタイル取得する
+
+    public TileObj GetClickTileObj()
+    {
+        Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit2D = Physics2D.Raycast(clickPosition,Vector2.down);
+        // Rayを飛ばしてヒットしたタイルを取得する
+        if (hit2D && hit2D.collider)
+        {
+            cursor.SetPosition(hit2D.transform);
+           return hit2D.collider.GetComponent<TileObj>();
+        }
+        return null;
     }
 
     // クリックしたオブジェクトを取得したい
@@ -66,7 +80,7 @@ public class MapManager : MonoBehaviour
     }
 
     // TODO 移動範囲を表示する
-    void ShowMovablePanels(Character character)
+    public void ShowMovablePanels(Character character)
     {
         // characterから上下左右のタイルを探す
 
@@ -82,7 +96,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    void ResetMovablepanels()
+    public void ResetMovablepanels()
     {
         foreach (var tile in movableTiles)
         {

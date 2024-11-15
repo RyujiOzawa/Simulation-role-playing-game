@@ -13,7 +13,11 @@ public class GameManager : MonoBehaviour
         EnemyCharacterMoveSelection,
     }
 
+    Character selectedCharacter;
+
     [SerializeField] Phase phase;
+    [SerializeField] CharactersManager charactersManager;
+    [SerializeField] MapManager mapManager;
 
     private void Start()
     {
@@ -48,9 +52,23 @@ public class GameManager : MonoBehaviour
     // PlayerCharacterSelectionフェーズでクリックした時にやりたいこと
     void PlayerCharacterSelection()
     {
-        // キャラを選択したら、移動範囲を表示して、移動フェーズへ
-        phase = Phase.PlayerCharacterMoveSelection;
+        // クリックしたタイルを取得して
+        // 其の上にキャラが居るなら
+        TileObj clickTileObj = mapManager.GetClickTileObj();
+
+        // キャラを取得して、移動範囲を表示
+        Character character = charactersManager.GetCharacter(clickTileObj.positionInt);
+        if (character)
+        {
+            // 選択キャラの保持
+            selectedCharacter = character;
+            mapManager.ResetMovablepanels();
+            // 移動範囲を表示
+            mapManager.ShowMovablePanels(selectedCharacter);
+            phase = Phase.PlayerCharacterMoveSelection;
+        }
     }
+
     // PlayerCharacterMoveSelectionフェーズでクリックした時にやりたいこと
     void PlayerCharacterMoveSelection()
     {
