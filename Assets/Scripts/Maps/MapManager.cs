@@ -8,10 +8,12 @@ public class MapManager : MonoBehaviour
     [SerializeField] CharactersManager charactersManager;
     [SerializeField] MapGenerator mapGenerator;
 
+    Character selectedCharacter;
     private void Start()
     {
         mapGenerator.Generate();
     }
+
 
     // クリックしたオブジェクトを取得したい
     // クリック判定　=> Update関数の中でInputを使う
@@ -25,18 +27,29 @@ public class MapManager : MonoBehaviour
                 clickPosition,
                 Vector2.down
                 );
+            // Rayを飛ばしてヒットしたタイルを取得する
             if (hit2D && hit2D.collider)
             {
                 cursor.SetPosition(hit2D.transform);
                 TileObj tileObj = hit2D.collider.GetComponent<TileObj>();
+                // ヒットしたタイル上のキャラを取得する
                 Character character = charactersManager.GetCharacter(tileObj.positionInt);
                 if (character)
                 {
                     Debug.Log("居る");
+                    // 選択キャラの保持
+                    selectedCharacter = character;
                 }
                 else
                 {
-                    Debug.Log("居ない");
+                    Debug.Log("クリックした場所にキャラが居ない");
+                    // キャラを保持しているなら、クリックしたタイルの場所に移動させる
+                    if (selectedCharacter)
+                    {
+                        // selectedCharacterをtileObj迄移動させる
+                        selectedCharacter.Move(tileObj.positionInt);
+                        selectedCharacter = null;
+                    }
                 }
             }
         }
