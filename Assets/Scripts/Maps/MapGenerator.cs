@@ -22,8 +22,10 @@ public class MapGenerator : MonoBehaviour
     const int FOREST_RATE = 30;
     
     // Map生成
-    public void Generate()
+    public List<TileObj> Generate()
     {
+        List<TileObj> tileObjs = new List<TileObj>();
+
         Vector2 offset = new Vector2(-WiDTH / 2, -HEIGHT / 2);
         for (int x = 0; x < WiDTH; x++)
         {
@@ -45,7 +47,9 @@ public class MapGenerator : MonoBehaviour
                     tileObj = Instantiate(grassPrefab, pos, Quaternion.identity, tileParent);
                 }
                 tileObj.positionInt = new Vector2Int((int) pos.x, (int) pos.y);
+                tileObjs.Add(tileObj);
             }
         }
+        return tileObjs;
     }
 }
