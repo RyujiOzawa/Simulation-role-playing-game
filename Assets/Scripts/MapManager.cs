@@ -5,11 +5,11 @@ using UnityEngine;
 public class MapManager : MonoBehaviour
 {
     [SerializeField] Cursor cursor;
+    [SerializeField] CharactersManager charactersManager;
 
     // クリックしたオブジェクトを取得したい
     // クリック判定　=> Update関数の中でInputを使う
     // クリックしたオブジェクトを取得したい　=> クリックした場所にRayを飛ばしてオブジェクトを取得する
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -23,7 +23,15 @@ public class MapManager : MonoBehaviour
             {
                 cursor.SetPosition(hit2D.transform);
                 TileObj tileObj = hit2D.collider.GetComponent<TileObj>();
-                Debug.Log(tileObj.positionInt);
+                Character character = charactersManager.GetCharacter(tileObj.positionInt);
+                if (character)
+                {
+                    Debug.Log("居る");
+                }
+                else
+                {
+                    Debug.Log("居ない");
+                }
             }
         }
     }
