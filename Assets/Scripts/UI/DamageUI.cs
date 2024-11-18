@@ -33,7 +33,7 @@ public class DamageUI : MonoBehaviour
         // 此の時にGameManagerのPlayerEndTurnを実行したい　
         OnEndAnim?.Invoke();
         //if (OnEndAnim != null)
-        //{
+        //{s
         //    OnEndAnim.Invoke();
         //}
     }
