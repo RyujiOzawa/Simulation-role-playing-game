@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        damageUI.OnEndAnim += OnPlayerTurnEnd;
         phase = Phase.PlayerCharacterSelection;
         actionCommnadUI.Show(false);
     }
@@ -138,7 +139,6 @@ public class GameManager : MonoBehaviour
                 mapManager.ResetAttackablePanels(attackableTiles);
                 actionCommnadUI.Show(false);
                 damageUI.Show(targetChara, damage);
-                OnPlayerTurnEnd();
             }
         }
     }
