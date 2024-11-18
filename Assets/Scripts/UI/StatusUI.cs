@@ -12,6 +12,7 @@ public class StatusUI : MonoBehaviour
     [SerializeField] Text hpText;
     [SerializeField] Text atText;
     [SerializeField] Text dfText;
+    [SerializeField] Image hpBar;
     // Statusの表示
     public void Show(Character character)
     {
@@ -20,6 +21,7 @@ public class StatusUI : MonoBehaviour
         hpText.text = $"{character.Hp}/{character.MaxHp}";
         atText.text = $"AT:{character.At}";
         dfText.text = $"DF:{character.Df}";
+        hpBar.fillAmount = (float)character.Hp / (float)character.MaxHp;
     }
 
     public void Hide()

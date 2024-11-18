@@ -1840,6 +1840,7 @@ MonoBehaviour:
   hpText: {fileID: 509418717}
   atText: {fileID: 1835061789}
   dfText: {fileID: 693368792}
+  hpBar: {fileID: 301478937}
 --- !u!1 &1808458140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,7 +2075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: hp
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: name
