@@ -127,10 +127,10 @@ public class GameManager : MonoBehaviour
         if (attackableTiles.Contains(clickTileObj))
         {
             // 敵キャラクターが居るなら　TODO: キャラの判定は出来るけど敵キャラの判定は出来ない
-            Character character = charactersManager.GetCharacter(clickTileObj.positionInt);
-            if (character && character.IsEnemy)
+            Character targetChara = charactersManager.GetCharacter(clickTileObj.positionInt);
+            if (targetChara && targetChara.IsEnemy)
             {
-                Debug.Log("攻撃処理");
+                selectedCharacter.Attack(targetChara);
                 mapManager.ResetAttackablePanels(attackableTiles);
                 actionCommnadUI.Show(false);
             }
@@ -138,7 +138,6 @@ public class GameManager : MonoBehaviour
     }
     public void OnAttackButton()
     {
-        Debug.Log("攻撃選択");
         phase = Phase.PlayerCharacterTargetSelection;
         // 攻撃範囲を表示
         mapManager.ResetAttackablePanels(attackableTiles);
@@ -148,7 +147,6 @@ public class GameManager : MonoBehaviour
 
     public void OnWaiteButton()
     {
-        Debug.Log("待機選択");
         OnPlayerTurnEnd();
     }
 

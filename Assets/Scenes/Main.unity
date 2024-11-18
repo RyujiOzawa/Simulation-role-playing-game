@@ -368,6 +368,14 @@ PrefabInstance:
       value: EnemyHero1
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: at
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: hp
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: isEnemy
       value: 1
       objectReference: {fileID: 0}
@@ -724,6 +732,14 @@ PrefabInstance:
       value: EnemyHero0
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: at
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: hp
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: isEnemy
       value: 1
       objectReference: {fileID: 0}
@@ -795,6 +811,14 @@ PrefabInstance:
     - target: {fileID: 1754259801715763995, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: m_Name
       value: PlayerHero1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: at
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: hp
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: positionInt.x
@@ -1425,6 +1449,14 @@ PrefabInstance:
     - target: {fileID: 1754259801715763995, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: m_Name
       value: PlayerHero0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: at
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: hp
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5657462597739740972, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: m_LocalPosition.x
