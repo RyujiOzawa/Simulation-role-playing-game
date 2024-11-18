@@ -1206,8 +1206,20 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: df
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: hp
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: name
+      value: "\u9B54\u6CD5\u4F7F\u3044"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: maxHp
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: positionInt.x
@@ -1560,6 +1572,7 @@ MonoBehaviour:
   charactersManager: {fileID: 1214843938}
   mapManager: {fileID: 1643184661}
   actionCommnadUI: {fileID: 162112411}
+  statusUI: {fileID: 1795020549}
 --- !u!4 &1245674894
 Transform:
   m_ObjectHideFlags: 0
@@ -1742,6 +1755,7 @@ GameObject:
   - component: {fileID: 1795020546}
   - component: {fileID: 1795020548}
   - component: {fileID: 1795020547}
+  - component: {fileID: 1795020549}
   m_Layer: 5
   m_Name: Status
   m_TagString: Untagged
@@ -1810,6 +1824,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795020545}
   m_CullTransparentMesh: 1
+--- !u!114 &1795020549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795020545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c587f3afa863f4b80bafa079f5c7ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 980747478}
+  hpText: {fileID: 509418717}
+  atText: {fileID: 1835061789}
+  dfText: {fileID: 693368792}
 --- !u!1 &1808458140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,7 +2069,19 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: df
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: hp
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: name
+      value: "\u52C7\u8005"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: maxHp
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5657462597739740972, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CharactersManager charactersManager;
     [SerializeField] MapManager mapManager;
     [SerializeField] ActionCommnadUI actionCommnadUI;
-
+    [SerializeField] StatusUI statusUI;
     private void Start()
     {
         phase = Phase.PlayerCharacterSelection;
@@ -72,6 +71,7 @@ public class GameManager : MonoBehaviour
             mapManager.ResetMovablepanels(movableTiles);
             // 移動範囲を表示
             mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+            statusUI.Show(selectedCharacter);
             return true;
         }
         return false;
