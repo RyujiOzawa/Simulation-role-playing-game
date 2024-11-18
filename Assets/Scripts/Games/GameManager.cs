@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
     List<TileObj> movableTiles = new List<TileObj>();
     // 選択キャラの攻撃範囲の保持
     List<TileObj> attackableTiles = new List<TileObj>();
-
 
     [SerializeField] Phase phase;
     [SerializeField] CharactersManager charactersManager;
@@ -126,13 +126,15 @@ public class GameManager : MonoBehaviour
         // 攻撃の範囲内をクリックしたら
         if (attackableTiles.Contains(clickTileObj))
         {
-            // 敵キャラクターが居るなら　TODO: キャラの判定は出来るけど敵キャラの判定は出来ない
+            // 敵キャラクターが居るなら　
             Character targetChara = charactersManager.GetCharacter(clickTileObj.positionInt);
             if (targetChara && targetChara.IsEnemy)
             {
+                // 攻撃処理
                 selectedCharacter.Attack(targetChara);
                 mapManager.ResetAttackablePanels(attackableTiles);
                 actionCommnadUI.Show(false);
+                OnPlayerTurnEnd();
             }
         }
     }
@@ -143,13 +145,12 @@ public class GameManager : MonoBehaviour
         mapManager.ResetAttackablePanels(attackableTiles);
         mapManager.ShowAttackablePanels(selectedCharacter, attackableTiles);
         actionCommnadUI.ShowAttackButton(false);
-    }
 
+    }
     public void OnWaiteButton()
     {
         OnPlayerTurnEnd();
     }
-
     void OnPlayerTurnEnd()
     {
         Debug.Log("相手ターン");
@@ -157,5 +158,38 @@ public class GameManager : MonoBehaviour
         actionCommnadUI.Show(false);
         selectedCharacter = null;
         mapManager.ResetAttackablePanels(attackableTiles);
+        EnemyCharacterSelection();
+    }
+
+    // キャラ選択
+    void EnemyCharacterSelection()
+    {
+        Debug.Log("敵のキャラ選択");
+        // charactersManagerからランダムに敵を持ってくる
+        selectedCharacter = charactersManager.GetRandomEnemy();
+
+        mapManager.ResetMovablepanels(movableTiles);
+        // 移動範囲を表示
+        mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+        EnemyCharacterMoveSelection();
+    }
+
+    // 移動
+    void EnemyCharacterMoveSelection()
+    {
+        Debug.Log("敵のキャラの移動");
+        // ランダムに移動場所を決めて移動する
+        int r = Random.Range(0,movableTiles.Count);
+        selectedCharacter.Move(movableTiles[r].positionInt);
+        mapManager.ResetMovablepanels(movableTiles);
+        OnEnemyTurnEnd();
+    }
+
+    void OnEnemyTurnEnd()
+    {
+        //---
+        Debug.Log("敵ターン終了");
+        selectedCharacter = null;
+        phase = Phase.PlayerCharacterSelection;
     }
 }

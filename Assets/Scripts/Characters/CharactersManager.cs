@@ -25,4 +25,14 @@ public class CharactersManager : MonoBehaviour
         }
         return null;
     }
+
+    // 敵キャラをランダムに1体取得する
+    public Character GetRandomEnemy()
+    {
+        // 全ての敵を集める
+        List<Character> enemies = characters.FindAll(chara => chara.IsEnemy);
+        // ランダムに1つ渡す
+        int r = Random.Range(0, enemies.Count);
+        return enemies[r];
+    }
 }
