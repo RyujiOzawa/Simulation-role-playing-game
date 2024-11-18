@@ -31,20 +31,27 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < HEIGHT; y++)
             {
+                // 移動コスト
+                // 平原:-1
+                // 森:-2
+                // 水:-99
                 Vector2 pos = new Vector2(x, y) + offset;
                 int rate = Random.Range(0, 100); // 0-99迄の数字がランダムで1つ出る
                 TileObj tileObj = null;
                 if (rate < WATER_RATE)
                 {
                     tileObj = Instantiate(waterPrefab, pos, Quaternion.identity, tileParent);
+                    tileObj.SetCost(-99);
                 }
                 else if (rate < FOREST_RATE)
                 {
                     tileObj = Instantiate(forestPrefab, pos, Quaternion.identity, tileParent);
+                    tileObj.SetCost(-2);
                 }
                 else
                 {
                     tileObj = Instantiate(grassPrefab, pos, Quaternion.identity, tileParent);
+                    tileObj.SetCost(-1);
                 }
                 tileObj.positionInt = new Vector2Int((int) pos.x, (int) pos.y);
                 tileObjs.Add(tileObj);
