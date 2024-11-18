@@ -32,17 +32,18 @@ public class Character : MonoBehaviour
         transform.position = (Vector2)positionInt;
     }
 
-    public void Damage(int value)
+    public int Damage(int value)
     {
         hp -= value;
         if (hp <= 0)
         {
             hp = 0;
         }
+        return value;
     }
 
-    public void Attack(Character target)
+    public int Attack(Character target)
     {
-        target.Damage(at);
+        return target.Damage(at);
     }
 }
