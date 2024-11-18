@@ -316,6 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d46acf0fe25a6145ac8152b133d04af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 1054382769}
 --- !u!1 &162112409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,6 +2031,7 @@ MonoBehaviour:
   actionCommnadUI: {fileID: 162112411}
   statusUI: {fileID: 1795020549}
   damageUI: {fileID: 1925071009}
+  phasePanelUI: {fileID: 110222398}
 --- !u!4 &1245674894
 Transform:
   m_ObjectHideFlags: 0

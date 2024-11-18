@@ -28,13 +28,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] ActionCommnadUI actionCommnadUI;
     [SerializeField] StatusUI statusUI;
     [SerializeField] DamageUI damageUI;
-
+    [SerializeField] PhasePanelUI phasePanelUI;
 
     private void Start()
     {
         damageUI.OnEndAnim += OnPlayerTurnEnd;
         phase = Phase.PlayerCharacterSelection;
         actionCommnadUI.Show(false);
+        StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
     }
 
     //PlayerCharacterSelection, // キャラ選択
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
     {
         OnPlayerTurnEnd();
     }
+
     void OnPlayerTurnEnd()
     {
         Debug.Log("相手ターン");
@@ -162,7 +164,8 @@ public class GameManager : MonoBehaviour
         actionCommnadUI.Show(false);
         selectedCharacter = null;
         mapManager.ResetAttackablePanels(attackableTiles);
-        EnemyCharacterSelection();
+        StartCoroutine(phasePanelUI.PanelAnim("ENEMY TURN", EnemyCharacterSelection));  //  フェーズアニメを実行
+        // EnemyCharacterSelection(); // フェーズアニメが終わってから実行したい
     }
 
     // キャラ選択
@@ -181,7 +184,6 @@ public class GameManager : MonoBehaviour
     // 移動
     void EnemyCharacterMoveSelection()
     {
-        Debug.Log("敵のキャラの移動");
         // ランダムに移動場所を決めて移動する
         int r = Random.Range(0,movableTiles.Count);
         selectedCharacter.Move(movableTiles[r].positionInt);
@@ -191,9 +193,8 @@ public class GameManager : MonoBehaviour
 
     void OnEnemyTurnEnd()
     {
-        //---
-        Debug.Log("敵ターン終了");
         selectedCharacter = null;
         phase = Phase.PlayerCharacterSelection;
+        StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
     }
 }
