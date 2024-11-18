@@ -40,6 +40,9 @@ public class MapManager : MonoBehaviour
         movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
         movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
 
+        // nullを除去
+        movableTiles.RemoveAll(tile => tile == null);
+
         foreach (var tile in movableTiles)
         {
             tile.ShowMovablePanel(true);
