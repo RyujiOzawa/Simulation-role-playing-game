@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     Character selectedCharacter;
     // 選択キャラの移動可能範囲の保持
     List<TileObj> movableTiles = new List<TileObj>();
+    // 選択キャラの攻撃範囲の保持
+    List<TileObj> attackableTiles = new List<TileObj>();
 
 
     [SerializeField] Phase phase;
@@ -109,13 +111,19 @@ public class GameManager : MonoBehaviour
                 actionCommnadUI.Show(true);
             }
             mapManager.ResetMovablepanels(movableTiles);
-            selectedCharacter = null;
         }
     }
+
+    // TODO：攻撃範囲内の敵をクリックしたら攻撃する
+    // ・居ない場合は待機ボタンを押してターン終了
 
     public void OnAttackButton()
     {
         Debug.Log("攻撃選択");
+        phase = Phase.PlayerCharacterTargetSelection;
+        // 攻撃範囲を表示
+        mapManager.ResetAttackablePanels(attackableTiles);
+        mapManager.ShowAttackablePanels(selectedCharacter, attackableTiles);
     }
 
     public void OnWaiteButton()

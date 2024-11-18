@@ -55,4 +55,31 @@ public class MapManager : MonoBehaviour
         }
         movableTiles.Clear();
     }
+
+    // 攻撃範囲を表示する
+    public void ShowAttackablePanels(Character character, List<TileObj> tiles)
+    {
+        // characterから上下左右のタイルを探す
+        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
+        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
+        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
+        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
+        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
+
+        foreach (var tile in tiles)
+        {
+            // TODO:攻撃用に変更
+            tile.ShowMovablePanel(true);
+        }
+    }
+
+    // 移動範囲表示をリセットする
+    public void ResetAttackablePanels(List<TileObj> tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.ShowMovablePanel(false);
+        }
+        tiles.Clear();
+    }
 }
