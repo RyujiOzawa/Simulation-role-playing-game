@@ -6,13 +6,14 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] Cursor cursor;
     [SerializeField] MapGenerator mapGenerator;
-
+    [SerializeField] CalcMoveRange calcMoveRange;
     // 生成したマップを管理する
-    List<TileObj> tileObjs = new List<TileObj>();
+    TileObj[,] tileObjs;
 
     private void Start()
     {
        tileObjs = mapGenerator.Generate();
+       calcMoveRange.SetMovecost(tileObjs);
     }
 
     // クリックしたタイル取得する
@@ -34,11 +35,11 @@ public class MapManager : MonoBehaviour
     {
         // characterから上下左右のタイルを探す
 
-        movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
-        movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
-        movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
-        movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
-        movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
+        //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
+        //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
+        //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
+        //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
+        //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
 
         // nullを除去
         movableTiles.RemoveAll(tile => tile == null);
@@ -63,11 +64,11 @@ public class MapManager : MonoBehaviour
     public void ShowAttackablePanels(Character character, List<TileObj> tiles)
     {
         // characterから上下左右のタイルを探す
-        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
-        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
-        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
-        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
-        tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
+        //tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
+        //tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
+        //tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
+        //tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.left));
+        //tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.right));
 
         foreach (var tile in tiles)
         {

@@ -16,18 +16,18 @@ public class MapGenerator : MonoBehaviour
     // Prefabの多様化:バリアント
     // 割合に応じたPrefabの生成
 
-    const int WiDTH = 15;
-    const int HEIGHT = 9;
+    public const int WIDTH = 15;
+    public const int HEIGHT = 9;
     const int WATER_RATE = 10;
     const int FOREST_RATE = 30;
     
     // Map生成
-    public List<TileObj> Generate()
+    public TileObj[,] Generate()
     {
-        List<TileObj> tileObjs = new List<TileObj>();
+        TileObj[,] tileObjs = new TileObj[WIDTH, HEIGHT];
 
-        Vector2 offset = new Vector2(-WiDTH / 2, -HEIGHT / 2);
-        for (int x = 0; x < WiDTH; x++)
+        Vector2 offset = new Vector2(-WIDTH / 2, -HEIGHT / 2);
+        for (int x = 0; x < WIDTH; x++)
         {
             for (int y = 0; y < HEIGHT; y++)
             {
@@ -54,7 +54,7 @@ public class MapGenerator : MonoBehaviour
                     tileObj.SetCost(-1);
                 }
                 tileObj.positionInt = new Vector2Int((int) pos.x, (int) pos.y);
-                tileObjs.Add(tileObj);
+                tileObjs[x,y] = tileObj;
             }
         }
         return tileObjs;
