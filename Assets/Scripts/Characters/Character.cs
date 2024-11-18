@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    [SerializeField] bool isEnemy;
     [SerializeField] Vector2Int positionInt;
 
     public Vector2Int Position { get => positionInt; }
+    public bool IsEnemy { get => isEnemy; }
 
     void Start()
     {
@@ -20,9 +22,3 @@ public class Character : MonoBehaviour
         transform.position = (Vector2)positionInt;
     }
 }
-
-// キャラクターの選択：前回
-// コードの整理：前回
-// TODO:キャラクターの移動
-// ・選択したキャラを保持
-// ・キャラ以外の場所をクリックすると移動
