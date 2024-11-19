@@ -55,6 +55,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 tileObj.positionInt = new Vector2Int((int) pos.x, (int) pos.y);
                 tileObjs[x,y] = tileObj;
+                tileObj.SetIndex(x, y);
             }
         }
         return tileObjs;

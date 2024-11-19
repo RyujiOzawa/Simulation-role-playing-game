@@ -30,11 +30,33 @@ public class MapManager : MonoBehaviour
         return null;
     }
 
+    TileObj GetTileOn(Character character)
+    {
+        for (int i = 0; i < tileObjs.GetLength(0); i++)
+        {
+            for (int j = 0; j < tileObjs.GetLength(1); j++)
+            {
+                if (tileObjs[i, j].positionInt == character.Position)
+                {
+                    return tileObjs[i, j];
+                }
+            }
+        }
+        return null;
+    }
     // 移動範囲を表示する
     public void ShowMovablePanels(Character character, List<TileObj> movableTiles)
     {
-        // characterから上下左右のタイルを探す
+        // エラーの原因:PlayerのPositionを入れているから、マイナスを入れてしまう
+        // 何番目のタイルなのか（index）が入る
 
+
+        // characterが乗っているタイルのIndexを取得する
+        Vector2Int index = GetTileOn(character).Index;
+
+        int[,] result = calcMoveRange.StartSearch(index.x, index.y, 4);
+
+        // characterから上下左右のタイルを探す
         //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
         //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.up));
         //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position + Vector2Int.down));
