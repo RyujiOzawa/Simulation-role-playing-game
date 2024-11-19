@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         PlayerCharacterTargetSelection,     //  攻撃対象選択
         EnemyCharacterSelection,
         EnemyCharacterMoveSelection,
+        EnemyCharacterTargetSelection,     //  攻撃対象選択
     }
 
     // 選択したキャラの保持
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
     bool IsClickCharacter(TileObj clickTileObj)
     {
         Character character = charactersManager.GetCharacter(clickTileObj.positionInt);
@@ -162,7 +164,6 @@ public class GameManager : MonoBehaviour
         mapManager.ResetAttackablePanels(attackableTiles);
         mapManager.ShowAttackablePanels(selectedCharacter, attackableTiles);
         actionCommnadUI.ShowAttackButton(false);
-
     }
     
     public void OnWaiteButton()
@@ -218,7 +219,38 @@ public class GameManager : MonoBehaviour
         // selectedCharacter.Move(movableTiles[r].positionInt);
         selectedCharacter.Move(movableTiles[r].positionInt, mapManager.GetRoot(selectedCharacter, movableTiles[r]));
         mapManager.ResetMovablepanels(movableTiles);
-        OnEnemyTurnEnd();
+        EnemyrCharacterTargetSelection();
+    }
+
+    // 敵の攻撃
+    void EnemyrCharacterTargetSelection()
+    {
+        // 攻撃範囲の取得
+        mapManager.ResetAttackablePanels(attackableTiles);
+        mapManager.ShowAttackablePanels(selectedCharacter, attackableTiles);
+        // 範囲内にPlayerのキャラが居れば取得
+        Character targetChara = null;
+        foreach (var tile in attackableTiles)
+        {
+            Character character = charactersManager.GetCharacter(tile.positionInt);
+            if (character && character.IsEnemy == false)
+            {
+                targetChara = character;
+            }
+        }
+        // ターゲットが居るなら攻撃を実行する
+        if (targetChara)
+        {
+            // 攻撃処理
+            int damage = selectedCharacter.Attack(targetChara);
+            mapManager.ResetAttackablePanels(attackableTiles);
+            actionCommnadUI.Show(false);
+            damageUI.Show(targetChara, damage);
+        }
+        else
+        {
+            OnEnemyTurnEnd();
+        }
     }
 
     void OnEnemyTurnEnd()
@@ -243,7 +275,9 @@ public class GameManager : MonoBehaviour
     }
 }
 
-// TODO：エラー
-// ・攻撃した場合に勝手に相手ターンになってしまうバグ
-// ・一度行動したキャラは行動出来ない
-// =>　移動したかどうかのフラグ(bool)を作ってやれば良い
+// TODO
+// ・Enemyが攻撃した場合にターンの切り替えがされない
+// ・移動と同時に攻撃をしてしまう
+// ・エリアの端だとエラーが出る
+// ・Playerの方に近付けない
+
