@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        damageUI.OnEndAnim += OnPlayerTurnEnd;
+        damageUI.OnEndAnim += OnAttacked;
         phase = Phase.PlayerCharacterSelection;
         actionCommnadUI.Show(false);
         StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
@@ -81,11 +81,16 @@ public class GameManager : MonoBehaviour
         {
             // 選択キャラの保持
             selectedCharacter = character;
-            mapManager.ResetMovablepanels(movableTiles);
-            // 移動範囲を表示
-            mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+            // キャラのステータスを表示
             statusUI.Show(selectedCharacter);
-            return true;
+            // もし自分のキャラが動いていないなら、移動範囲表示
+            if (character.IsMoved == false　&& character.IsEnemy == false)
+            {
+                mapManager.ResetMovablepanels(movableTiles);
+                // 移動範囲を表示
+                mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+                return true;
+            }
         }
         return false;
     }
@@ -169,6 +174,18 @@ public class GameManager : MonoBehaviour
         phase = Phase.PlayerCharacterSelection;
     }
 
+    // 攻撃が終わったよ
+    void OnAttacked()
+    {
+        if (phase == Phase.PlayerCharacterTargetSelection)
+        {
+            actionCommnadUI.Show(false);
+            selectedCharacter = null;
+            mapManager.ResetAttackablePanels(attackableTiles);
+            phase = Phase.PlayerCharacterSelection;
+        }
+    }
+
     void OnPlayerTurnEnd()
     {
         Debug.Log("相手ターン");
@@ -210,6 +227,13 @@ public class GameManager : MonoBehaviour
         phase = Phase.PlayerCharacterSelection;
         StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
         turnEndButton.SetActive(true);
+        foreach (var chara in charactersManager.characters)
+        {
+            if (chara.IsEnemy == false)
+            {
+                chara.OnBeginTurn();
+            }
+        }
     }
 
     public void OnTurnEndButton()
@@ -220,9 +244,6 @@ public class GameManager : MonoBehaviour
 }
 
 // TODO：エラー
-// エラーの解消
-// 連続してキャラが選べない
-// 
-// 次
-// ・一度行動したキャラは行動出来ない
 // ・攻撃した場合に勝手に相手ターンになってしまうバグ
+// ・一度行動したキャラは行動出来ない
+// =>　移動したかどうかのフラグ(bool)を作ってやれば良い

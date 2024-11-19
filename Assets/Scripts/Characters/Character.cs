@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     [SerializeField] bool isEnemy;
     [SerializeField] Vector2Int positionInt;
     [SerializeField] int moveRange;
+    bool isMoved;
 
     public Vector2Int Position { get => positionInt; }
     public bool IsEnemy { get => isEnemy; }
@@ -23,6 +24,7 @@ public class Character : MonoBehaviour
     public int Df { get => df; }
     public int MaxHp { get => maxHp; }
     public int MoveRange { get => moveRange; }
+    public bool IsMoved { get => isMoved; }
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class Character : MonoBehaviour
         transform.DOPath(path, 0.3f).SetEase(Ease.Linear);
 
         positionInt = pos;
+        isMoved = true;
         // transform.position = (Vector2)positionInt;
         // transform.DOMove((Vector2)positionInt, 0.3f).SetEase(Ease.Linear);
     }
@@ -55,5 +58,10 @@ public class Character : MonoBehaviour
     public int Attack(Character target)
     {
         return target.Damage(at);
+    }
+
+    public void OnBeginTurn()
+    {
+        isMoved = false;
     }
 }
