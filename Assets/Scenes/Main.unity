@@ -636,6 +636,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: moveRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: positionInt.x
       value: -1
       objectReference: {fileID: 0}
@@ -1276,6 +1280,10 @@ PrefabInstance:
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: isEnemy
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
+      propertyPath: moveRange
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}
       propertyPath: positionInt.x

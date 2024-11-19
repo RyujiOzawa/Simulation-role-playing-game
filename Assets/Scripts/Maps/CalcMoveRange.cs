@@ -162,6 +162,7 @@ public class CalcMoveRange : MonoBehaviour
                 root.Add(tileObjs[arroundIndex.x, arroundIndex.y]);
                 // 更に、其の場所について調べる
                 Search4Root(root, startIndex, arroundIndex, tileObjs);
+                break;
             }
         } 
     }
@@ -187,3 +188,13 @@ public class CalcMoveRange : MonoBehaviour
         return false;
     }
 }
+
+/// バグの修正
+/// ・経路探索で変な動きをするバグの修正　=> breakを入れる
+/// ・敵キャラが移動しなくなったバグの修正 => moveRangeを0以外にする
+/// ・攻撃が出来なくなったバグの修正 => コメントアウトしていたコードを復活
+/// 
+/// ・初期の生成位置について 
+/// ・キャラを通過出来ない様にする
+/// ・全てのキャラの移動が終わってからターンを終了する
+/// ・敵の攻撃の実装
