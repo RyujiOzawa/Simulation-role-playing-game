@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] StatusUI statusUI;
     [SerializeField] DamageUI damageUI;
     [SerializeField] PhasePanelUI phasePanelUI;
+    [SerializeField] GameObject turnEndButton;
 
     private void Start()
     {
@@ -36,6 +38,7 @@ public class GameManager : MonoBehaviour
         phase = Phase.PlayerCharacterSelection;
         actionCommnadUI.Show(false);
         StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
+        turnEndButton.SetActive(true);
     }
 
     //PlayerCharacterSelection, // キャラ選択
@@ -52,6 +55,11 @@ public class GameManager : MonoBehaviour
 
     void PlayerClickAction()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            //UIをクリックした場合
+            return;
+        }
         switch (phase)
         {
             case Phase.PlayerCharacterSelection:
@@ -151,9 +159,14 @@ public class GameManager : MonoBehaviour
         actionCommnadUI.ShowAttackButton(false);
 
     }
+    
     public void OnWaiteButton()
     {
-        OnPlayerTurnEnd();
+        // OnPlayerTurnEnd();
+        actionCommnadUI.Show(false);
+        selectedCharacter = null;
+        mapManager.ResetAttackablePanels(attackableTiles);
+        phase = Phase.PlayerCharacterSelection;
     }
 
     void OnPlayerTurnEnd()
@@ -196,5 +209,20 @@ public class GameManager : MonoBehaviour
         selectedCharacter = null;
         phase = Phase.PlayerCharacterSelection;
         StartCoroutine(phasePanelUI.PanelAnim("PLAYER TURN"));
+        turnEndButton.SetActive(true);
+    }
+
+    public void OnTurnEndButton()
+    {
+        OnPlayerTurnEnd();
+        turnEndButton.SetActive(false);
     }
 }
+
+// TODO：エラー
+// エラーの解消
+// 連続してキャラが選べない
+// 
+// 次
+// ・一度行動したキャラは行動出来ない
+// ・攻撃した場合に勝手に相手ターンになってしまうバグ
