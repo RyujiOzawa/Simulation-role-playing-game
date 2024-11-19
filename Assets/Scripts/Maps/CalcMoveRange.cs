@@ -112,4 +112,57 @@ public class CalcMoveRange : MonoBehaviour
         }
     }
 
+    // 経路探索
+    // 現在の位置から、クリックした場所迄のマスを取得したい！
+    // クリックしたマス（ゴールマス）から移動コストを戻して、逆順で経路を出す
+
+    public List<TileObj> GetRoot(Vector2Int startIndex, Vector2Int goalIndex, TileObj[,] tileObjs)
+    {
+        List<TileObj> root = new List<TileObj>();
+        // 取り敢えず目的地のタイルを入れる
+        root.Add(tileObjs[goalIndex.x, goalIndex.y]);
+        // TODO:startIndex迄のタイルを入れたい
+        Search4Root(root, startIndex, goalIndex, tileObjs);
+        //
+        return root;
+    }
+
+    // 上下左右で、移動コストが一致するものが有ればrootに追加して、startIndexと一致する迄調べる
+    void Search4Root(List<TileObj> root, Vector2Int startIndex, Vector2Int searchIndex, TileObj[,] tileObjs)
+    {
+        if (startIndex == searchIndex)
+        {
+            // 調査終了
+            return;
+        }
+        // 移動コストを戻して一致するものが有ればrootに追加して其の場所を調べる
+        // 現在の移動コスト
+        int currentMovePower = _resultMoveRangeList[searchIndex.x, searchIndex.y];
+        // 移動前の移動コストに戻す
+        currentMovePower = currentMovePower - _originalMapList[searchIndex.x, searchIndex.y];
+
+        // 上下左右で、移動コストが一致するものを探す
+
+        Vector2Int[] arround =
+        {
+            Vector2Int.up,
+            Vector2Int.down,
+            Vector2Int.left,
+            Vector2Int.right,
+        };
+        for (int i = 0; i < arround.Length; i++)
+        {
+            // 例えば上なら
+            Vector2Int arroundIndex = searchIndex + arround[i];
+
+            if (currentMovePower == _resultMoveRangeList[arroundIndex.x, arroundIndex.y])
+            {
+                // ルートに追加
+                root.Add(tileObjs[arroundIndex.x, arroundIndex.y]);
+                // 更に、其の場所について調べる
+                Search4Root(root, startIndex, arroundIndex, tileObjs);
+            }
+        } 
+        
+    }
 }
