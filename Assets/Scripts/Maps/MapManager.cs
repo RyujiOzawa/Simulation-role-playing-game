@@ -100,16 +100,21 @@ public class MapManager : MonoBehaviour
         // tiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
         // キャラから見て上下左右のタイルを探せば良い
         TileObj currentTile = GetTileOn(character);
-        tiles.Add(tileObjs[currentTile.Index.x, currentTile.Index.y + 1]);
-        tiles.Add(tileObjs[currentTile.Index.x, currentTile.Index.y - 1]);
-        tiles.Add(tileObjs[currentTile.Index.x + 1, currentTile.Index.y]);
-        tiles.Add(tileObjs[currentTile.Index.x - 1, currentTile.Index.y]);
-
-
+        Addtile(tiles, currentTile.Index.x, currentTile.Index.y + 1);;
+        Addtile(tiles, currentTile.Index.x, currentTile.Index.y - 1);
+        Addtile(tiles, currentTile.Index.x + 1, currentTile.Index.y);
+        Addtile(tiles, currentTile.Index.x - 1, currentTile.Index.y);
         foreach (var tile in tiles)
         {
-            // TODO:攻撃用に変更
             tile.ShowMovablePanel(true);
+        }
+    }
+
+    void Addtile(List<TileObj> tiles, int x, int y)
+    {
+        if (0<= x && x < tileObjs.GetLength(0) && 0 <= y && y < tileObjs.GetLength(1))
+        {
+            tiles.Add(tileObjs[x, y]);
         }
     }
 

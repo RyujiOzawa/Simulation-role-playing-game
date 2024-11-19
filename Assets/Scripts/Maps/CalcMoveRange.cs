@@ -82,7 +82,7 @@ public class CalcMoveRange : MonoBehaviour
     void Search4(int x, int z, int m)
     {
 
-        if (0 < x && x < _xLength && 0 < z && z < _zLength)
+        if (0 <= x && x < _xLength && 0 < z && z < _zLength)
         {
             // 上方向
             Search(x, z - 1, m);
