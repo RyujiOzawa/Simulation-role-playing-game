@@ -58,7 +58,6 @@ public class CalcMoveRange : MonoBehaviour
         _z = currentZ;
         _m = movePower;
 
-        Debug.Log($"_x:{_x}, _z:{_z} : _xLength:{_xLength}, _zLength:{_zLength}");
         // 現在位置に現在の移動力を代入
         _resultMoveRangeList[_x,_z] = _m;
         Search4(_x, _z, _m);

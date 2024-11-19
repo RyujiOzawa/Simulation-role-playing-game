@@ -12,6 +12,7 @@ public class Character : MonoBehaviour
     [SerializeField] int df;
     [SerializeField] bool isEnemy;
     [SerializeField] Vector2Int positionInt;
+    [SerializeField] int moveRange;
 
     public Vector2Int Position { get => positionInt; }
     public bool IsEnemy { get => isEnemy; }
@@ -20,6 +21,7 @@ public class Character : MonoBehaviour
     public int At { get => at; }
     public int Df { get => df; }
     public int MaxHp { get => maxHp; }
+    public int MoveRange { get => moveRange; }
 
     void Start()
     {

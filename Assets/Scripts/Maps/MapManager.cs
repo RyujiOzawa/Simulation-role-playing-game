@@ -54,7 +54,19 @@ public class MapManager : MonoBehaviour
         // characterが乗っているタイルのIndexを取得する
         Vector2Int index = GetTileOn(character).Index;
 
-        int[,] result = calcMoveRange.StartSearch(index.x, index.y, 4);
+        int[,] result = calcMoveRange.StartSearch(index.x, index.y, character.MoveRange);
+
+        for (int i = 0; i < result.GetLength(0); i++)
+        {
+            for (int j = 0;j < result.GetLength(1); j++)
+            {
+                // 0以上なら移動範囲として追加する
+                if ((result[i, j] >= 0))
+                {
+                    movableTiles.Add(tileObjs[i, j]);
+                }
+            }
+        }
 
         // characterから上下左右のタイルを探す
         //movableTiles.Add(tileObjs.Find(tile => tile.positionInt == character.Position));
