@@ -2335,6 +2335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a029072d0c8ee24499f46d487de3f6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _charactersManager: {fileID: 1214843938}
 --- !u!114 &1777183103 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4705489461286959649, guid: ebaf4114e79ebf0458ef2bceefe625f1, type: 3}

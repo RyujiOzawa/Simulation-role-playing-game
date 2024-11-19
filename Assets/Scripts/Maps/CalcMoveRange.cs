@@ -19,6 +19,9 @@ public class CalcMoveRange : MonoBehaviour
     int _xLength = MapGenerator.WIDTH;
     int _zLength = MapGenerator.HEIGHT;
 
+    [SerializeField] CharactersManager _charactersManager;
+
+    // TODO キャラが居ればコスト-99にする
     public void SetMovecost(TileObj[,] tileObjs)
     {
         // 移動コストのマップデータを(_originalMapList)作成 (本来はここでは作成せず外部から渡す)
@@ -26,7 +29,15 @@ public class CalcMoveRange : MonoBehaviour
         {
             for (int j = 0; j < _zLength; j++)
             {
-                _originalMapList[i,j] = tileObjs[i,j].Cost;
+                Character npc = _charactersManager.GetCharacter(tileObjs[i, j].transform.position);
+                if (npc)
+                {
+                    _originalMapList[i, j] = -99;
+                }
+                else
+                {
+                    _originalMapList[i, j] = tileObjs[i, j].Cost;
+                }
             }
         }
     }
@@ -199,5 +210,8 @@ public class CalcMoveRange : MonoBehaviour
 ///  => キャラの位置を取得して、其の場合ますは平原にする
 
 /// ・キャラを通過出来ない様にする
+///  => キャラが居る場所をコスト-99にしてやる
+///  => 注意：キャラは移動するので毎回書き換えないといけない
+///  ---
 /// ・全てのキャラの移動が終わってからターンを終了する
 /// ・敵の攻撃の実装
