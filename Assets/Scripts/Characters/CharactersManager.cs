@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CharactersManager : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class CharactersManager : MonoBehaviour
         }
         return null;
     }
+
     // 敵キャラをランダムに1体取得する
     public Character GetRandomEnemy()
     {
@@ -45,5 +47,16 @@ public class CharactersManager : MonoBehaviour
         // ランダムに1つ渡す
         int r = Random.Range(0, enemies.Count);
         return enemies[r];
+    }
+
+    // 自分に最も近いキャラ(敵キャラ)探す
+    // 敵キャラ：PlayerからするとEnemy, EnemyからするとPlayer
+
+    public Character GetClosestCharacter(Character self)
+    {
+        return characters
+            .Where(chara => chara.IsEnemy != self.IsEnemy) //  敵を探す
+            .OrderBy(chara => Vector2.Distance(self.Position, chara.Position)) //  selfから距離が近い順に並べる
+            .FirstOrDefault(); // 最も近いキャラを渡す
     }
 }

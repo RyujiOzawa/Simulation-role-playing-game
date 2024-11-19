@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -214,10 +215,15 @@ public class GameManager : MonoBehaviour
     // 移動
     void EnemyCharacterMoveSelection()
     {
-        // ランダムに移動場所を決めて移動する
-        int r = Random.Range(0,movableTiles.Count);
-        // selectedCharacter.Move(movableTiles[r].positionInt);
-        selectedCharacter.Move(movableTiles[r].positionInt, mapManager.GetRoot(selectedCharacter, movableTiles[r]));
+        // 手順
+        // ・ターゲットとなるPlayerを見付ける　=> 一番近いPlayer
+        Character target = charactersManager.GetClosestCharacter(selectedCharacter);
+        // ・移動範囲の中で、Playerに近い場所を探す
+        TileObj targetTile = movableTiles
+            .OrderBy(tile => Vector2.Distance(target.Position, tile.positionInt)) // 小さい順に並べ替える
+            .FirstOrDefault(); // 最初のタイルを渡す
+
+        selectedCharacter.Move(targetTile.positionInt, mapManager.GetRoot(selectedCharacter, targetTile));
         mapManager.ResetMovablepanels(movableTiles);
         EnemyrCharacterTargetSelection();
     }
@@ -275,9 +281,11 @@ public class GameManager : MonoBehaviour
     }
 }
 
-// TODO
+
 // ・Enemyが攻撃した場合にターンの切り替えがされない
 // ・移動と同時に攻撃をしてしまう
 // ・エリアの端だとエラーが出る
-// ・Playerの方に近付けない
+// ・Playerに近付ける　TODO
 
+
+// キーワード「最小」：一番近い
