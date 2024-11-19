@@ -192,12 +192,19 @@ public class GameManager : MonoBehaviour
             actionCommnadUI.Show(false);
             selectedCharacter = null;
             mapManager.ResetAttackablePanels(attackableTiles);
-            OnEnemyTurnEnd();
+            EnemyCharacterSelection();
         }
     }
 
     void OnPlayerTurnEnd()
     {
+        foreach (var chara in charactersManager.characters)
+        {
+            if (chara.IsEnemy)
+            {
+                chara.OnBeginTurn();
+            }
+        }
         Debug.Log("相手ターン");
         phase = Phase.EnemyCharacterSelection;
         actionCommnadUI.Show(false);
@@ -212,12 +219,18 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("敵のキャラ選択");
         // charactersManagerからランダムに敵を持ってくる
-        selectedCharacter = charactersManager.GetRandomEnemy();
-
-        mapManager.ResetMovablepanels(movableTiles);
-        // 移動範囲を表示
-        mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
-        EnemyCharacterMoveSelection();
+        selectedCharacter = charactersManager.GetMovableEnemy();
+        if (selectedCharacter)
+        {
+            mapManager.ResetMovablepanels(movableTiles);
+            // 移動範囲を表示
+            mapManager.ShowMovablePanels(selectedCharacter, movableTiles);
+            EnemyCharacterMoveSelection();
+        }
+        else
+        {
+            OnEnemyTurnEnd();
+        }
     }
 
     // 移動
@@ -264,11 +277,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            OnEnemyTurnEnd();
+            EnemyCharacterSelection();
         }
     }
-
-    void OnEnemyTurnEnd()
+     void OnEnemyTurnEnd()
     {
         selectedCharacter = null;
         phase = Phase.PlayerCharacterSelection;
@@ -290,11 +302,6 @@ public class GameManager : MonoBehaviour
         turnEndButton.SetActive(false);
     }
 }
-// ・Playerに近付ける
-// ・Enemyが攻撃した場合にターンの切り替えがされない 
-//  理由：処理書いてないから
-// ・移動と同時に攻撃をしてしまう => UnityActionを活用する
-// ・エリアの端だとエラーが出る 
-//  ・範囲外だから
 
-// ・全ての敵が動いたらPlayerのターンになる
+// ・全ての敵が動いたらPlayerのターンになる　TODO
+// 　・移動したかどうかを確認していなければターン終了

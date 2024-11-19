@@ -48,6 +48,11 @@ public class CharactersManager : MonoBehaviour
         int r = Random.Range(0, enemies.Count);
         return enemies[r];
     }
+    // 移動出来る敵キャラを取得
+    public Character GetMovableEnemy()
+    {
+        return characters.Find(enemy => enemy.IsEnemy && !enemy.IsMoved);
+    }
 
     // 自分に最も近いキャラ(敵キャラ)探す
     // 敵キャラ：PlayerからするとEnemy, EnemyからするとPlayer
