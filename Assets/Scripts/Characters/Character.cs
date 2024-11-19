@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class Character : MonoBehaviour
 {
@@ -29,11 +30,16 @@ public class Character : MonoBehaviour
     }
 
     // キャラを移動
-    public void Move(Vector2Int pos)
+    public void Move(Vector2Int pos, List<TileObj> root)
     {
+        // Selectを使って、リストの中の特定の要素だけを取得したリストを作る
+        Vector3[] path = root.Select(tile => tile.transform.position).ToArray();
+        // 経路に沿って移動する(経路, 移動時間);
+        transform.DOPath(path, 0.3f).SetEase(Ease.Linear);
+
         positionInt = pos;
         // transform.position = (Vector2)positionInt;
-        transform.DOMove((Vector2)positionInt, 0.3f).SetEase(Ease.Linear);
+        // transform.DOMove((Vector2)positionInt, 0.3f).SetEase(Ease.Linear);
     }
 
     public int Damage(int value)

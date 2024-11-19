@@ -121,9 +121,9 @@ public class CalcMoveRange : MonoBehaviour
         List<TileObj> root = new List<TileObj>();
         // 取り敢えず目的地のタイルを入れる
         root.Add(tileObjs[goalIndex.x, goalIndex.y]);
-        // TODO:startIndex迄のタイルを入れたい
+        // startIndex迄のタイルを入れたい
         Search4Root(root, startIndex, goalIndex, tileObjs);
-        //
+        root.Reverse();
         return root;
     }
 
@@ -155,7 +155,8 @@ public class CalcMoveRange : MonoBehaviour
             // 例えば上なら
             Vector2Int arroundIndex = searchIndex + arround[i];
 
-            if (currentMovePower == _resultMoveRangeList[arroundIndex.x, arroundIndex.y])
+            // コストが一致するなら
+            if (IsMatch(currentMovePower, arroundIndex))
             {
                 // ルートに追加
                 root.Add(tileObjs[arroundIndex.x, arroundIndex.y]);
@@ -163,6 +164,26 @@ public class CalcMoveRange : MonoBehaviour
                 Search4Root(root, startIndex, arroundIndex, tileObjs);
             }
         } 
-        
+    }
+
+    // 調べる場所が範囲外でエラーになる
+    // 範囲外なら「調べない」にすれば良い
+    bool IsMatch(int currentMovePower, Vector2Int arroundIndex)
+    {
+        // 範囲外ならfalse
+        if (arroundIndex.x < 0 || arroundIndex.x >= _resultMoveRangeList.GetLength(0))
+        {
+            return false;
+        }
+        if (arroundIndex.y < 0 || arroundIndex.y >= _resultMoveRangeList.GetLength(1))
+        {
+            return false;
+        }
+        // 一致するならtrue
+        if (currentMovePower == _resultMoveRangeList[arroundIndex.x, arroundIndex.y])
+        {
+            return true;
+        }
+        return false;
     }
 }
